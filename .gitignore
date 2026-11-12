@@ -1,0 +1,15 @@
+node_modules/
+dist/
+dist-*/
+*.log
+.env
+.env.*
+
+# 本机运行配置：可能包含授权信息或仅对当前电脑有效的路径
+connection-config.json
+group-config.json
+image-upload-config.json
+
+# 临时浏览器自动化文件
+.tabbit-*.js
+
