@@ -1,0 +1,918 @@
+<style>
+#xhs-app{font-family:"Microsoft YaHei",system-ui,sans-serif;color:light-dark(#202938,#e5e7eb)}#xhs-app .app{background:light-dark(#f7f8fb,#17191f);border:1px solid light-dark(#dfe3ea,#3b404b);border-radius:16px;overflow:hidden}#xhs-app .bar{background:light-dark(#fff,#20232b);display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid light-dark(#e7e9ee,#393e48)}#xhs-app .logo{width:28px;height:28px;border-radius:8px;background:light-dark(#e74d4d,#ff7171);color:#fff;display:grid;place-items:center}#xhs-app .title{font-weight:500;flex:1}#xhs-app .layout{display:grid;grid-template-columns:210px 1fr;min-height:610px}#xhs-app aside{padding:18px 12px;background:light-dark(#fff,#20232b);border-right:1px solid light-dark(#e7e9ee,#393e48)}#xhs-app .nav{display:flex;gap:9px;align-items:center;width:100%;text-align:left;padding:10px 12px;margin:3px 0;border:0;background:transparent;color:inherit;border-radius:8px}#xhs-app .nav.active{background:light-dark(#fff0f0,#42282d);color:light-dark(#d73d48,#ff9ea5)}#xhs-app main{padding:24px;min-width:0}#xhs-app .head,.row{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}#xhs-app h2{font-size:20px;margin:0 0 5px;font-weight:500}#xhs-app h3{font-size:15px;margin:0 0 12px;font-weight:500}#xhs-app p{margin:0;color:light-dark(#687386,#a8b0bf)}#xhs-app .section{background:light-dark(#fff,#20232b);border:1px solid light-dark(#e1e5ec,#3a404b);border-radius:12px;padding:17px;margin-top:14px}#xhs-app textarea{width:100%;box-sizing:border-box;min-height:100px;resize:vertical;background:light-dark(#fbfcfe,#181b21);color:inherit;border:1px solid light-dark(#d8dde6,#444a57);border-radius:8px;padding:10px;font:inherit}#xhs-app button{font:inherit}#xhs-app .primary{background:light-dark(#e5484d,#e5676b);color:#fff;border:0;border-radius:8px;padding:9px 13px}#xhs-app .secondary{background:transparent;color:inherit;border:1px solid light-dark(#d7dce5,#4c5361);border-radius:8px;padding:8px 12px}#xhs-app .muted{font-size:12px;color:light-dark(#758094,#abb3c1)}#xhs-app .groups{display:grid;grid-template-columns:1fr 1fr;gap:10px}#xhs-app .mapping{padding:10px;background:light-dark(#fafbfc,#181b21);border:1px solid light-dark(#e3e6ec,#3d434e);border-radius:8px}#xhs-app .mapping strong{font-weight:500}#xhs-app .mapping span{color:light-dark(#697588,#adb6c5);font-size:12px}#xhs-app select{background:light-dark(#fff,#181b21);color:inherit;border:1px solid light-dark(#d8dde6,#444a57);border-radius:7px;padding:7px 8px;font:inherit}#xhs-app .scroll{overflow:auto}#xhs-app table{width:100%;border-collapse:collapse;min-width:820px;font-size:13px}#xhs-app th{text-align:left;color:light-dark(#687386,#abb3c1);font-weight:500;background:light-dark(#f7f8fb,#1a1d24)}#xhs-app th,#xhs-app td{padding:10px 9px;border-bottom:1px solid light-dark(#e9ebf0,#373c46);vertical-align:middle}#xhs-app td a{color:light-dark(#3d6ecc,#8bb3ff);text-decoration:none}#xhs-app .tag{display:inline-block;background:light-dark(#fff0f0,#44282f);color:light-dark(#c63f49,#ff9ba2);padding:3px 7px;border-radius:10px}#xhs-app .ok{color:light-dark(#188a54,#67d69a)}#xhs-app .status{min-height:20px;font-size:13px}@media(max-width:720px){#xhs-app .layout{grid-template-columns:1fr}#xhs-app aside{border-right:0;border-bottom:1px solid light-dark(#e7e9ee,#393e48);padding:8px;display:flex;gap:4px;overflow:auto}#xhs-app .nav{width:auto;white-space:nowrap}#xhs-app main{padding:16px}#xhs-app .groups{grid-template-columns:1fr}}
+</style>
+<div id="xhs-app" aria-label="小红书采集并上传飞书桌面软件原型"><div class="app"><div class="bar"><span class="logo"><i data-lucide="book-open" aria-hidden="true"></i></span><span class="title">小红书采集 · 飞书上传</span><span class="muted">本地桌面工具</span></div><div class="layout"><aside aria-label="功能导航"><button class="nav active" type="button"><i data-lucide="table-properties" aria-hidden="true"></i>采集与上传</button><button class="nav" type="button"><i data-lucide="images" aria-hidden="true"></i>图片上传</button><button class="nav" type="button"><i data-lucide="layers-3" aria-hidden="true"></i>分组配置</button><button class="nav" type="button"><i data-lucide="link" aria-hidden="true"></i>飞书连接</button></aside><main><div class="head"><div><h2>采集与上传</h2><p>粘贴小红书分享文本，提取链接后按分组生成飞书记录。</p></div><button class="secondary" type="button"><i data-lucide="check-circle-2" aria-hidden="true"></i> 飞书已连接</button></div><section class="section"><h3>1. 粘贴分享内容</h3><textarea id="share" aria-label="小红书分享内容">26Goertek歌尔精英计划笔试原题多！ https://xhslink.cn/o/24dDaFsX5Vz&#10;2027歌尔笔试测评，这些题反反复复考！ https://xhslink.cn/o/AMfbWoJofHp</textarea><div class="row" style="margin-top:10px"><span class="muted">每行一条，系统仅提取其中的小红书链接</span><div class="row" style="gap:8px"><label>当前采集分组 <select id="selected-group"><option>一组</option><option>二组</option></select></label><button class="primary" id="parse" type="button"><i data-lucide="scan-line" aria-hidden="true"></i> 提取并开始采集</button></div></div></section><section class="section"><div class="row"><h3 style="margin:0">2. 采集结果</h3><span class="status" id="status" aria-live="polite">等待采集</span></div><div class="scroll"><table><thead><tr><th>分组</th><th>链接</th><th>笔记 ID</th><th>发布账号</th><th>商品 ID</th><th>标题</th><th>话题标签</th></tr></thead><tbody id="results"><tr><td><span class="tag">一组</span></td><td><a href="#">xhslink.cn/o/…</a></td><td>—</td><td>一组1</td><td>商品ID-001</td><td>等待采集</td><td>—</td></tr><tr><td><span class="tag">一组</span></td><td><a href="#">xhslink.cn/o/…</a></td><td>—</td><td>一组2</td><td>商品ID-002</td><td>等待采集</td><td>—</td></tr></tbody></table></div><div class="row" style="margin-top:14px"><span class="muted">按飞书字段名写入：发布账号、商品ID、标题、话题标签。可直接编辑单元格，并支持复制粘贴。</span><button class="primary" id="upload" type="button"><i data-lucide="upload" aria-hidden="true"></i> 上传到飞书</button></div></section></main></div></div></div>
+<script>
+const root = document.getElementById('xhs-app');
+const input = root.querySelector('#share');
+const group = root.querySelector('#selected-group');
+const body = root.querySelector('#results');
+const status = root.querySelector('#status');
+const parseButton = root.querySelector('#parse');
+const rules = {'一组':[['一组1','商品ID-001'],['一组2','商品ID-002'],['一组3','商品ID-003']],'二组':[['二组1','商品ID-101'],['二组2','商品ID-102']]};
+function safe(v){const d=document.createElement('div');d.textContent=v;return d.innerHTML}
+async function render(){
+  const urls = [...input.value.matchAll(/https?:\/\/(?:www\.)?(?:xhslink\.cn|xiaohongshu\.com)\/[^\s]+/g)].map(match => match[0]);
+  if (!urls.length) {
+    status.innerHTML = '<span style="color:#d73d48">没有找到可采集的小红书链接。</span>';
+    return;
+  }
+  parseButton.disabled = true;
+  status.innerHTML = `<span class="muted">正在读取 ${urls.length} 条小红书笔记的真实标题和话题标签…</span>`;
+  try {
+    const response = await fetch('/api/xiaohongshu/collect', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({urls}),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.code !== 0) throw new Error(result.msg || `HTTP ${response.status}`);
+    const notes = result.data?.items || [];
+    const failures = result.data?.failures || [];
+    const accounts = rules[group.value] || [];
+    const productId = root.querySelector('#product-id')?.value.trim() || '—';
+    body.innerHTML = notes.flatMap(note => accounts.map(([account]) => `
+      <tr>
+        <td><span class="tag">${safe(group.value)}</span></td>
+        <td><a href="${safe(note.finalUrl || note.sourceUrl)}" target="_blank" rel="noreferrer">${safe(note.sourceUrl.replace('https://',''))}</a></td>
+        <td>${safe(note.noteId || '—')}</td>
+        <td>${safe(account)}</td>
+        <td>${safe(productId)}</td>
+        <td>${safe(note.title || '—')}</td>
+        <td>${safe((note.tags || []).slice(0,10).join(',') || '—')}</td>
+      </tr>`)).join('');
+    const failureMessage = failures.length ? `，${failures.length} 条失败` : '';
+    status.innerHTML = `<span class="ok">已真实采集 ${notes.length} 条笔记，生成 ${notes.length * accounts.length} 条记录${failureMessage}</span>`;
+  } catch (error) {
+    status.innerHTML = `<span style="color:#d73d48">采集失败：${safe(error.message)}。</span>`;
+  } finally {
+    parseButton.disabled = false;
+  }
+}
+parseButton.addEventListener('click',render);
+root.querySelector('#upload').addEventListener('click',()=>status.innerHTML='<span class="ok">上传完成：已写入飞书多维表格</span>');
+if(globalThis.lucide)lucide.createIcons({attrs:{width:16,height:16}});
+</script>
+<style>
+#xhs-app .image-settings-grid{display:grid;grid-template-columns:minmax(220px,1.25fr) minmax(130px,.55fr) minmax(130px,.55fr);gap:14px;align-items:end}
+#xhs-app .field-control{display:grid;gap:6px}
+#xhs-app .field-control input,#xhs-app .field-control select{box-sizing:border-box;width:100%;background:light-dark(#fff,#181b21);color:inherit;border:1px solid light-dark(#d8dde6,#444a57);border-radius:7px;padding:9px;font:inherit}
+#xhs-app .image-folder-empty{margin-top:14px;padding:28px 18px;text-align:center;border:1px dashed light-dark(#cfd5df,#505766);border-radius:10px;color:light-dark(#758094,#abb3c1)}
+#xhs-app .image-folder-list{display:grid;gap:10px;margin-top:14px}
+#xhs-app .image-folder-card{display:grid;grid-template-columns:minmax(0,1fr) 130px auto;gap:14px;align-items:center;padding:12px;border:1px solid light-dark(#e1e5ec,#3a404b);border-radius:9px;background:light-dark(#fafbfc,#181b21)}
+#xhs-app .image-folder-card strong{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#xhs-app .image-folder-path{display:block;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#xhs-app .image-preview-table{table-layout:fixed;min-width:720px}
+#xhs-app .image-preview-table th:nth-child(1){width:100px}
+#xhs-app .image-preview-table th:nth-child(2){width:110px}
+#xhs-app .image-preview-table td:nth-child(3){overflow-wrap:anywhere}
+#xhs-app button:disabled{opacity:.58;cursor:not-allowed}
+@media(max-width:860px){#xhs-app .image-settings-grid{grid-template-columns:1fr 1fr}#xhs-app .image-settings-grid .field-control:first-child{grid-column:1/-1}#xhs-app .image-folder-card{grid-template-columns:1fr auto}#xhs-app .image-folder-card .folder-quantity{grid-column:1/2}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const app = document.getElementById('xhs-app');
+  const main = app.querySelector('main');
+  const navItems = [...app.querySelectorAll('.nav')];
+  const collectionViews = [...main.children].filter(node => !['group-settings-view','feishu-settings-view'].includes(node.id));
+  const groupView = app.querySelector('#group-settings-view');
+  const feishuView = app.querySelector('#feishu-settings-view');
+  const imageView = document.createElement('div');
+  imageView.id = 'image-upload-view';
+  imageView.hidden = true;
+  imageView.innerHTML = `
+    <div class="head">
+      <div><h2>图片上传</h2><p>按飞书多维表格的数据行，批量把本地文件夹中的图片写入附件字段。</p></div>
+      <div style="display:grid;gap:7px;justify-items:end"><span class="status" id="image-connection-status">等待连接</span><button class="secondary" id="image-refresh-fields" type="button">刷新附件字段</button></div>
+    </div>
+    <section class="section">
+      <h3>1. 上传设置</h3>
+      <div class="image-settings-grid">
+        <label class="field-control">飞书附件字段<select id="image-field"><option value="">请先刷新附件字段</option></select></label>
+        <label class="field-control">表格起始行<input id="image-start-row" type="number" min="1" step="1" value="2"></label>
+        <label class="field-control">表格结束行<input id="image-end-row" type="number" min="1" step="1" placeholder="留空则自动"></label>
+      </div>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:14px"><input id="image-append" type="checkbox">保留目标单元格中的原图片，并追加新图片</label>
+      <p class="muted" style="margin-top:8px">设置修改后自动保存，下次启动会恢复上次选择。行号按当前飞书视图中的数据顺序计算；结束行留空时，自动按图片数量生成上传行。</p>
+    </section>
+    <section class="section">
+      <div class="row"><div><h3 style="margin:0 0 5px">2. 图片文件夹配置</h3><span class="muted">可添加多个文件夹；图片按文件名自然排序，每个文件夹分别设置“每行张数”。</span></div><button class="secondary" id="image-add-folders" type="button">+ 添加文件夹</button></div>
+      <div id="image-folder-empty" class="image-folder-empty">点击“+ 添加文件夹”，选择需要上传的图片目录</div>
+      <div id="image-folder-list" class="image-folder-list"></div>
+    </section>
+    <section class="section">
+      <div class="row"><h3 style="margin:0">3. 上传预览</h3><span class="status" id="image-plan-summary">尚未选择图片</span></div>
+      <div class="scroll" style="margin-top:12px"><table class="image-preview-table"><thead><tr><th>飞书行号</th><th>图片数量</th><th>图片文件</th></tr></thead><tbody id="image-plan-body"><tr><td colspan="3" class="muted">添加文件夹后自动生成上传计划</td></tr></tbody></table></div>
+      <div class="row" style="margin-top:14px"><div class="status" id="image-upload-status" aria-live="polite">待命</div><div style="display:flex;gap:8px"><button class="secondary" id="image-cancel" type="button" disabled>取消</button><button class="primary" id="image-start-upload" type="button">开始上传图片</button></div></div>
+    </section>`;
+  main.append(imageView);
+
+  const fieldSelect = imageView.querySelector('#image-field');
+  const startRowInput = imageView.querySelector('#image-start-row');
+  const endRowInput = imageView.querySelector('#image-end-row');
+  const appendInput = imageView.querySelector('#image-append');
+  const connectionStatus = imageView.querySelector('#image-connection-status');
+  const refreshFields = imageView.querySelector('#image-refresh-fields');
+  const addFolders = imageView.querySelector('#image-add-folders');
+  const emptyFolders = imageView.querySelector('#image-folder-empty');
+  const folderList = imageView.querySelector('#image-folder-list');
+  const planSummary = imageView.querySelector('#image-plan-summary');
+  const planBody = imageView.querySelector('#image-plan-body');
+  const uploadStatus = imageView.querySelector('#image-upload-status');
+  const uploadButton = imageView.querySelector('#image-start-upload');
+  const cancelButton = imageView.querySelector('#image-cancel');
+  const authCodeInput = app.querySelector('#feishu-auth-code');
+  const tableUrlInput = app.querySelector('#feishu-table-url');
+  const settingsKey = 'xiaohongshu-image-upload-settings-v1';
+  let folders = [];
+  let activeController = null;
+  let settingsState = {};
+  let settingsReady = false;
+  let preferredFieldName = '';
+
+  const setActive = index => navItems.forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === index));
+  const showImageView = () => {
+    collectionViews.forEach(view => { view.hidden = true; });
+    groupView.hidden = true;
+    feishuView.hidden = true;
+    imageView.hidden = false;
+    setActive(1);
+    updateConnectionStatus();
+    updateAttachmentFields(feishuView._fieldItems || []);
+  };
+  navItems[1].addEventListener('click', showImageView);
+  [0,2,3].forEach(index => navItems[index].addEventListener('click', () => { imageView.hidden = true; }));
+
+  const updateConnectionStatus = () => {
+    const connected = feishuView.dataset.connected === 'true';
+    connectionStatus.textContent = connected ? '飞书已连接' : '飞书未连接';
+    connectionStatus.className = connected ? 'status ok' : 'status';
+    if (!connected) connectionStatus.style.color = '#d73d48'; else connectionStatus.style.color = '';
+  };
+  const updateAttachmentFields = items => {
+    const current = fieldSelect.value;
+    const attachmentFields = (Array.isArray(items) ? items : []).filter(item => Number(item.type) === 17);
+    fieldSelect.innerHTML = attachmentFields.length
+      ? attachmentFields.map(item => `<option value="${safe(item.field_name)}">${safe(item.field_name)}</option>`).join('')
+      : '<option value="">没有读取到附件字段</option>';
+    const desiredField = current || preferredFieldName || loadSettings().fieldName;
+    if (attachmentFields.some(item => item.field_name === desiredField)) {
+      fieldSelect.value = desiredField;
+      preferredFieldName = desiredField;
+    }
+    updateConnectionStatus();
+    saveSettings();
+  };
+  document.addEventListener('feishu-fields-updated', event => updateAttachmentFields(event.detail?.items || []));
+
+  const parseTableConnection = () => {
+    if (feishuView.dataset.connected !== 'true') throw new Error('请先到“飞书连接”完成连接校验');
+    const parsedUrl = new URL(tableUrlInput.value.trim());
+    const appToken = parsedUrl.pathname.match(/\/base\/([^/?#]+)/)?.[1];
+    const tableId = parsedUrl.searchParams.get('table');
+    const viewId = parsedUrl.searchParams.get('view') || '';
+    if (!appToken || !tableId) throw new Error('飞书链接中缺少 app_token 或 table 参数');
+    return {authCode:authCodeInput.value.trim(), appToken, tableId, viewId};
+  };
+  const requestAttachmentFields = async () => {
+    refreshFields.disabled = true;
+    uploadStatus.innerHTML = '<span class="muted">正在从飞书读取附件字段…</span>';
+    try {
+      const connection = parseTableConnection();
+      const response = await fetch('/api/feishu/validate', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(connection)});
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.code !== 0) {
+        const failed = result.data?.failed || [];
+        const detail = failed.length
+          ? failed.slice(0,3).map(item => `第${item.rowNumber}行：${item.message}`).join('；')
+          : '';
+        throw new Error([result.msg || `HTTP ${response.status}`, detail].filter(Boolean).join('；'));
+      }
+      feishuView._fieldItems = result.data?.items || [];
+      updateAttachmentFields(feishuView._fieldItems);
+      const count = feishuView._fieldItems.filter(item => Number(item.type) === 17).length;
+      uploadStatus.innerHTML = count ? `<span class="ok">已读取 ${count} 个附件字段。</span>` : '<span style="color:#b7791f">连接正常，但当前表格没有附件字段。</span>';
+    } catch (error) {
+      uploadStatus.innerHTML = `<span style="color:#d73d48">刷新失败：${safe(error.message)}。</span>`;
+    } finally {
+      refreshFields.disabled = false;
+    }
+  };
+  refreshFields.addEventListener('click', requestAttachmentFields);
+
+  function loadSettings() {
+    return settingsState;
+  }
+  const saveSettings = () => {
+    const value = {
+      fieldName: fieldSelect.value || preferredFieldName,
+      startRow: startRowInput.value,
+      endRow: endRowInput.value,
+      append: appendInput.checked,
+      folders: folders.map(folder => ({path:folder.path, perRow:folder.perRow})),
+    };
+    settingsState = value;
+    try { localStorage.setItem(settingsKey, JSON.stringify(value)); } catch {}
+    if (!settingsReady || !globalThis.desktopConfig?.saveImageUploadSettings) return;
+    const result = globalThis.desktopConfig.saveImageUploadSettings(value);
+    if (result?.ok === false) {
+      uploadStatus.innerHTML = `<span style="color:#d73d48">上传设置保存失败：${safe(result.error || '未知错误')}。</span>`;
+    }
+  };
+
+  const renderFolders = () => {
+    emptyFolders.hidden = folders.length > 0;
+    folderList.innerHTML = folders.map((folder, index) => `
+      <div class="image-folder-card" data-folder-index="${index}">
+        <div style="min-width:0"><strong title="${safe(folder.path)}">${safe(folder.name)}</strong><span class="muted image-folder-path" title="${safe(folder.path)}">${safe(folder.path)} · ${folder.files.length} 张图片</span></div>
+        <label class="field-control folder-quantity">每行张数<input type="number" data-folder-count min="1" max="50" step="1" value="${folder.perRow}"></label>
+        <button class="secondary" type="button" data-remove-folder style="color:#d73d48">移除</button>
+      </div>`).join('');
+    saveSettings();
+    renderPlan();
+  };
+  const buildPlan = () => {
+    const startRow = Math.max(1, Math.trunc(Number(startRowInput.value) || 1));
+    const explicitEnd = Math.trunc(Number(endRowInput.value) || 0);
+    const automaticCount = Math.max(0, ...folders.map(folder => Math.ceil(folder.files.length / Math.max(1, folder.perRow))));
+    const rowCount = explicitEnd >= startRow ? explicitEnd - startRow + 1 : automaticCount;
+    return Array.from({length:Math.min(500, rowCount)}, (_, index) => {
+      const files = folders.flatMap(folder => folder.files.slice(index * folder.perRow, (index + 1) * folder.perRow));
+      return {rowNumber:startRow + index, files};
+    }).filter(row => row.files.length);
+  };
+  const renderPlan = () => {
+    const plan = buildPlan();
+    const totalFiles = plan.reduce((sum, row) => sum + row.files.length, 0);
+    planSummary.textContent = plan.length ? `${plan.length} 行，共 ${totalFiles} 张图片` : '尚未生成上传计划';
+    planSummary.className = plan.length ? 'status ok' : 'status';
+    planBody.innerHTML = plan.length ? plan.slice(0,100).map(row => `<tr><td>第 ${row.rowNumber} 行</td><td>${row.files.length} 张</td><td>${safe(row.files.map(file => file.name).join('、'))}</td></tr>`).join('') : '<tr><td colspan="3" class="muted">添加文件夹后自动生成上传计划</td></tr>';
+    if (plan.length > 100) planBody.insertAdjacentHTML('beforeend', `<tr><td colspan="3" class="muted">其余 ${plan.length - 100} 行将在上传时继续处理</td></tr>`);
+    saveSettings();
+  };
+
+  addFolders.addEventListener('click', async () => {
+    if (!globalThis.desktopImages?.selectFolders) {
+      uploadStatus.innerHTML = '<span style="color:#d73d48">文件夹选择只在桌面应用中可用，请从桌面快捷方式打开软件。</span>';
+      return;
+    }
+    addFolders.disabled = true;
+    uploadStatus.innerHTML = '<span class="muted">正在读取图片文件夹…</span>';
+    try {
+      const paths = await globalThis.desktopImages.selectFolders();
+      if (!paths.length) { uploadStatus.textContent = '已取消选择'; return; }
+      const uniquePaths = paths.filter(path => !folders.some(folder => folder.path.toLowerCase() === path.toLowerCase()));
+      const scanned = await globalThis.desktopImages.scanFolders(uniquePaths);
+      folders.push(...scanned.map(folder => ({...folder, perRow:1})));
+      renderFolders();
+      uploadStatus.innerHTML = `<span class="ok">已添加 ${scanned.length} 个文件夹。</span>`;
+    } catch (error) {
+      uploadStatus.innerHTML = `<span style="color:#d73d48">读取文件夹失败：${safe(error.message)}。</span>`;
+    } finally {
+      addFolders.disabled = false;
+    }
+  });
+  folderList.addEventListener('input', event => {
+    const input = event.target.closest('[data-folder-count]');
+    if (!input) return;
+    const index = Number(input.closest('[data-folder-index]').dataset.folderIndex);
+    folders[index].perRow = Math.max(1, Math.min(50, Math.trunc(Number(input.value) || 1)));
+    renderPlan();
+  });
+  folderList.addEventListener('click', event => {
+    const button = event.target.closest('[data-remove-folder]');
+    if (!button) return;
+    const index = Number(button.closest('[data-folder-index]').dataset.folderIndex);
+    folders.splice(index, 1);
+    renderFolders();
+  });
+  [fieldSelect,startRowInput,endRowInput,appendInput].forEach(control => {
+    const updateSetting = () => {
+      if (control === fieldSelect && fieldSelect.value) preferredFieldName = fieldSelect.value;
+      renderPlan();
+    };
+    control.addEventListener('input', updateSetting);
+    control.addEventListener('change', updateSetting);
+  });
+
+  uploadButton.addEventListener('click', async () => {
+    const plan = buildPlan();
+    const totalFiles = plan.reduce((sum, row) => sum + row.files.length, 0);
+    if (!fieldSelect.value) { uploadStatus.innerHTML = '<span style="color:#d73d48">请选择飞书附件字段。</span>'; return; }
+    if (!plan.length) { uploadStatus.innerHTML = '<span style="color:#d73d48">请先添加含图片的文件夹。</span>'; return; }
+    if (totalFiles > 1000) { uploadStatus.innerHTML = '<span style="color:#d73d48">单次最多上传 1000 张图片，请减少文件夹或结束行。</span>'; return; }
+    let connection;
+    try { connection = parseTableConnection(); } catch (error) { uploadStatus.innerHTML = `<span style="color:#d73d48">${safe(error.message)}。</span>`; return; }
+    activeController = new AbortController();
+    uploadButton.disabled = true;
+    cancelButton.disabled = false;
+    uploadStatus.innerHTML = `<span class="muted">正在上传 ${totalFiles} 张图片并写入 ${plan.length} 行飞书记录，请勿关闭软件…</span>`;
+    try {
+      const rows = plan.map(row => ({rowNumber:row.rowNumber, files:row.files.map(file => ({path:file.path}))}));
+      const response = await fetch('/api/feishu/upload-images', {
+        method:'POST', headers:{'Content-Type':'application/json'}, signal:activeController.signal,
+        body:JSON.stringify({...connection,fieldName:fieldSelect.value,append:appendInput.checked,rows}),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.code !== 0) {
+        const failed = result.data?.failed || [];
+        const detail = failed.length
+          ? failed.slice(0,3).map(item => `第${item.rowNumber}行：${item.message}`).join('；')
+          : '';
+        throw new Error([result.msg || `HTTP ${response.status}`, detail].filter(Boolean).join('；'));
+      }
+      const failed = result.data?.failed || [];
+      const failedMessage = failed.length ? `；${failed.length} 行失败：${failed.slice(0,3).map(item => `第${item.rowNumber}行 ${item.message}`).join('，')}` : '';
+      uploadStatus.innerHTML = `<span class="ok">上传完成：已写入 ${result.data?.succeeded?.length || 0} 行、${result.data?.uploadedCount || 0} 张图片${safe(failedMessage)}。</span>`;
+    } catch (error) {
+      uploadStatus.innerHTML = error.name === 'AbortError'
+        ? '<span style="color:#b7791f">已停止等待上传结果；飞书正在处理的当前图片可能已完成。</span>'
+        : `<span style="color:#d73d48">上传失败：${safe(error.message)}。</span>`;
+    } finally {
+      activeController = null;
+      uploadButton.disabled = false;
+      cancelButton.disabled = true;
+    }
+  });
+  cancelButton.addEventListener('click', () => activeController?.abort());
+
+  const restoreSettings = async () => {
+    let saved = {};
+    try {
+      if (globalThis.desktopConfig?.loadImageUploadSettings) {
+        saved = await globalThis.desktopConfig.loadImageUploadSettings();
+      } else {
+        saved = JSON.parse(localStorage.getItem(settingsKey) || '{}');
+      }
+    } catch (error) {
+      try { saved = JSON.parse(localStorage.getItem(settingsKey) || '{}'); } catch { saved = {}; }
+      uploadStatus.innerHTML = `<span style="color:#b7791f">读取上次上传设置失败：${safe(error.message)}。</span>`;
+    }
+    settingsState = saved || {};
+    preferredFieldName = String(saved.fieldName || '');
+    startRowInput.value = saved.startRow || '2';
+    endRowInput.value = saved.endRow || '';
+    appendInput.checked = Boolean(saved.append);
+    const savedFolders = Array.isArray(saved.folders) ? saved.folders : [];
+    if (savedFolders.length && globalThis.desktopImages?.scanFolders) {
+      try {
+        const scanned = await globalThis.desktopImages.scanFolders(savedFolders.map(folder => folder.path));
+        folders = scanned.map((folder, index) => ({...folder,perRow:Math.max(1,Math.min(50,Number(savedFolders[index]?.perRow) || 1))}));
+      } catch (error) {
+        uploadStatus.innerHTML = `<span style="color:#b7791f">部分已保存文件夹无法恢复：${safe(error.message)}。</span>`;
+      }
+    }
+    renderFolders();
+    updateAttachmentFields(feishuView._fieldItems || []);
+    settingsReady = true;
+    saveSettings();
+  };
+  restoreSettings();
+  if (globalThis.lucide) lucide.createIcons({attrs:{width:16,height:16}});
+});
+</script>
+<style>
+#xhs-app .collection-results-table{table-layout:fixed;width:1060px;min-width:100%}
+#xhs-app .collection-results-table th,#xhs-app .collection-results-table td{box-sizing:border-box;overflow-wrap:anywhere}
+#xhs-app .collection-results-table th{position:relative}
+#xhs-app .collection-results-table th:nth-child(2),#xhs-app .collection-results-table td:nth-child(2),#xhs-app .collection-results-table th:nth-child(3),#xhs-app .collection-results-table td:nth-child(3){display:none}
+#xhs-app .column-resizer{position:absolute;z-index:2;top:0;right:-4px;width:9px;height:100%;cursor:col-resize;touch-action:none}
+#xhs-app .column-resizer::after{content:"";position:absolute;top:20%;bottom:20%;left:4px;width:1px;background:light-dark(#d5dae3,#4b5260)}
+#xhs-app .column-resizer:hover::after,#xhs-app .column-resizer.dragging::after{width:2px;background:#e5484d}
+</style>
+<script>
+(() => {
+  const table = document.querySelector('#results')?.closest('table');
+  if (!table) return;
+  table.classList.add('collection-results-table');
+  const initialWidths = new Map([[1,90],[4,130],[5,150],[6,280],[7,260]]);
+  const headers = [...table.querySelectorAll('thead th')];
+  headers.forEach((header, index) => {
+    const column = index + 1;
+    if (!initialWidths.has(column)) return;
+    header.style.width = `${initialWidths.get(column)}px`;
+    const resizer = document.createElement('span');
+    resizer.className = 'column-resizer';
+    resizer.setAttribute('aria-label', `调整${header.textContent.trim()}列宽`);
+    resizer.addEventListener('pointerdown', event => {
+      event.preventDefault();
+      const startX = event.clientX;
+      const startWidth = header.getBoundingClientRect().width;
+      const startTableWidth = table.getBoundingClientRect().width;
+      resizer.classList.add('dragging');
+      const move = moveEvent => {
+        const delta = moveEvent.clientX - startX;
+        const nextWidth = Math.max(70, startWidth + delta);
+        const appliedDelta = nextWidth - startWidth;
+        header.style.width = `${nextWidth}px`;
+        table.style.width = `${Math.max(820, startTableWidth + appliedDelta)}px`;
+      };
+      const stop = () => {
+        resizer.classList.remove('dragging');
+        document.removeEventListener('pointermove', move);
+        document.removeEventListener('pointerup', stop);
+      };
+      document.addEventListener('pointermove', move);
+      document.addEventListener('pointerup', stop);
+    });
+    header.append(resizer);
+  });
+})();
+</script>
+<style>
+#xhs-app #results td.editable-cell{cursor:text;outline:none;transition:background .15s,box-shadow .15s}
+#xhs-app #results td.editable-cell:hover{background:light-dark(#fffbea,#302d21)}
+#xhs-app #results td.editable-cell:focus{background:light-dark(#fff,#252932);box-shadow:inset 0 0 0 2px #e5484d}
+#xhs-app #results td.editable-cell[data-edited="true"]::after{content:"";display:inline-block;width:5px;height:5px;margin-left:6px;border-radius:50%;background:#e5484d;vertical-align:middle}
+</style>
+<script>
+(() => {
+  const results = document.querySelector('#xhs-app #results');
+  if (!results) return;
+  const editableColumns = [3, 4, 5, 6];
+  const normalizeTags = value => [...new Set(String(value || '')
+    .split(/[,，#\r\n]+/)
+    .map(tag => tag.trim())
+    .filter(Boolean))]
+    .slice(0, 10)
+    .join(',');
+  const normalizeCell = cell => {
+    let value = cell.textContent.replace(/\u00a0/g, ' ').trim();
+    if (cell.cellIndex === 6) value = normalizeTags(value);
+    cell.textContent = value || '—';
+    cell.dataset.edited = 'true';
+  };
+  const activateEditableCells = () => results.querySelectorAll('tr').forEach(row => {
+    editableColumns.forEach(index => {
+      const cell = row.cells[index];
+      if (!cell) return;
+      cell.contentEditable = 'true';
+      cell.spellcheck = false;
+      cell.classList.add('editable-cell');
+      cell.setAttribute('aria-label', `可编辑${['发布账号','商品 ID','标题','话题标签'][editableColumns.indexOf(index)]}`);
+      cell.title = '点击修改；支持复制粘贴；按 Enter 完成';
+    });
+  });
+  new MutationObserver(activateEditableCells).observe(results, {childList:true});
+  activateEditableCells();
+  results.addEventListener('input', event => {
+    const cell = event.target.closest('td.editable-cell');
+    if (cell) cell.dataset.edited = 'true';
+  });
+  results.addEventListener('blur', event => {
+    const cell = event.target.closest('td.editable-cell');
+    if (cell) normalizeCell(cell);
+  }, true);
+  results.addEventListener('keydown', event => {
+    const cell = event.target.closest('td.editable-cell');
+    if (cell && event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      cell.blur();
+    }
+  });
+  results.addEventListener('paste', event => {
+    const startCell = event.target.closest('td.editable-cell');
+    if (!startCell) return;
+    const text = event.clipboardData?.getData('text/plain') || '';
+    event.preventDefault();
+    const matrix = text.replace(/\r/g, '').split('\n').filter((line, index, lines) => line || index < lines.length - 1).map(line => line.split('\t'));
+    const rows = [...results.rows];
+    const startRow = rows.indexOf(startCell.parentElement);
+    const startColumn = editableColumns.indexOf(startCell.cellIndex);
+    matrix.forEach((values, rowOffset) => values.forEach((value, columnOffset) => {
+      const target = rows[startRow + rowOffset]?.cells[editableColumns[startColumn + columnOffset]];
+      if (!target) return;
+      target.textContent = value;
+      normalizeCell(target);
+    }));
+    startCell.focus();
+  });
+})();
+</script>
+<script>
+(() => {
+  const app = document.getElementById('xhs-app');
+  const main = app.querySelector('main');
+  const navItems = [...app.querySelectorAll('.nav')];
+  const collectionViews = [...main.children];
+  const groupView = document.createElement('div');
+  groupView.id = 'group-settings-view';
+  groupView.hidden = true;
+  groupView.innerHTML = `
+    <div class="head"><div><h2>分组配置</h2><p>配置大组下的发布账号与默认商品 ID；采集时会按全部子组展开记录。</p></div><div style="display:flex;align-items:center;gap:12px"><span class="status muted" id="group-save-status">正在读取配置…</span><button class="primary" type="button" id="add-group">新增分组</button></div></div>
+    <section class="section">
+      <div class="row"><h3 style="margin:0">一组</h3><button class="secondary" type="button">+ 添加发布账号</button></div>
+      <div class="scroll" style="margin-top:12px"><table><thead><tr><th>发布账号</th><th>默认商品 ID</th><th>操作</th></tr></thead><tbody><tr><td>一组1</td><td>商品ID-001</td><td><button class="secondary" type="button">编辑</button></td></tr><tr><td>一组2</td><td>商品ID-002</td><td><button class="secondary" type="button">编辑</button></td></tr><tr><td>一组3</td><td>商品ID-003</td><td><button class="secondary" type="button">编辑</button></td></tr></tbody></table></div>
+    </section>
+    <section class="section">
+      <div class="row"><h3 style="margin:0">二组</h3><button class="secondary" type="button">+ 添加发布账号</button></div>
+      <div class="scroll" style="margin-top:12px"><table><thead><tr><th>发布账号</th><th>默认商品 ID</th><th>操作</th></tr></thead><tbody><tr><td>二组1</td><td>商品ID-101</td><td><button class="secondary" type="button">编辑</button></td></tr><tr><td>二组2</td><td>商品ID-102</td><td><button class="secondary" type="button">编辑</button></td></tr></tbody></table></div>
+    </section>`;
+  main.append(groupView);
+
+  const showView = view => {
+    const isGroup = view === 'groups';
+    collectionViews.forEach(element => { element.hidden = isGroup; });
+    groupView.hidden = !isGroup;
+    navItems.forEach((item, index) => item.classList.toggle('active', isGroup ? index === 2 : index === 0));
+  };
+  navItems[0].addEventListener('click', () => showView('collection'));
+  navItems[2].addEventListener('click', () => showView('groups'));
+})();
+</script>
+<script>
+(() => {
+  const app = document.getElementById('xhs-app');
+  const groupView = app.querySelector('#group-settings-view');
+  const description = groupView.querySelector('.head p');
+  description.textContent = '配置大组下的发布账号；采集时会按全部子组展开记录。商品 ID 仅在采集与上传页面按本次填写值写入。';
+  groupView.querySelectorAll('table').forEach(table => {
+    table.querySelectorAll('tr').forEach(row => {
+      if (row.cells[1]) row.cells[1].remove();
+    });
+  });
+})();
+</script>
+<script>
+(() => {
+  const app = document.getElementById('xhs-app');
+  const main = app.querySelector('main');
+  const navItems = [...app.querySelectorAll('.nav')];
+  const collectionViews = [...main.children].filter(node => node.id !== 'group-settings-view');
+  const groupView = app.querySelector('#group-settings-view');
+  const feishuView = document.createElement('div');
+  feishuView.id = 'feishu-settings-view';
+  feishuView.hidden = true;
+  feishuView.innerHTML = `
+    <div class="head"><div><h2>飞书连接</h2><p>填写授权码和多维表格链接，通过飞书接口读取字段并确认真实连接状态。</p></div><div style="display:grid;gap:7px;justify-items:end"><span class="status" id="feishu-connection-status">未连接</span><button class="secondary" id="refresh-feishu" type="button">刷新连接</button></div></div>
+    <section class="section">
+      <h3>连接信息</h3>
+      <div style="display:grid;gap:14px">
+        <label>授权码<div class="row" style="margin-top:6px;flex-wrap:nowrap"><input id="feishu-auth-code" type="password" autocomplete="off" placeholder="请输入多维表格授权码" style="box-sizing:border-box;min-width:0;flex:1;background:light-dark(#fff,#181b21);color:inherit;border:1px solid light-dark(#d8dde6,#444a57);border-radius:7px;padding:9px;font:inherit"><button class="secondary" id="toggle-auth-code" type="button" style="min-width:68px">显示</button></div></label>
+        <label>多维表格链接<input id="feishu-table-url" type="url" placeholder="https://my.feishu.cn/base/..." style="box-sizing:border-box;width:100%;margin-top:6px;background:light-dark(#fff,#181b21);color:inherit;border:1px solid light-dark(#d8dde6,#444a57);border-radius:7px;padding:9px;font:inherit"></label>
+        <div class="row"><span class="muted">保存成功后使用 Windows 安全存储加密授权码，下次启动自动恢复并连接。</span><button class="primary" id="validate-feishu" type="button">保存并校验</button></div>
+        <div class="status" id="feishu-validation-message" aria-live="polite"></div>
+      </div>
+    </section>
+    <section class="section"><div class="row"><h3 style="margin:0">飞书字段校验</h3><span class="muted">与采集及图片上传字段一一对应</span></div><div class="scroll" style="margin-top:12px"><table><thead><tr><th>飞书字段</th><th>写入来源</th><th>状态</th></tr></thead><tbody><tr><td>发布账号</td><td>采集结果 → 发布账号</td><td><span data-field-status>待校验</span></td></tr><tr><td>标题</td><td>采集结果 → 标题</td><td><span data-field-status>待校验</span></td></tr><tr><td>话题标签</td><td>采集结果 → 话题标签（最多 10 个）</td><td><span data-field-status>待校验</span></td></tr><tr><td>图片</td><td>图片上传 → 本地图片文件夹</td><td><span data-field-status>待校验</span></td></tr></tbody></table></div></section>`;
+  main.append(feishuView);
+
+  const authCodeInput = feishuView.querySelector('#feishu-auth-code');
+  const tableUrlInput = feishuView.querySelector('#feishu-table-url');
+  const toggleAuthCode = feishuView.querySelector('#toggle-auth-code');
+  const validateFeishu = feishuView.querySelector('#validate-feishu');
+  const refreshFeishu = feishuView.querySelector('#refresh-feishu');
+  const connectionStatus = feishuView.querySelector('#feishu-connection-status');
+  const validationMessage = feishuView.querySelector('#feishu-validation-message');
+  const collectionConnectionBadge = collectionViews[0].querySelector('.secondary');
+  const requiredFields = ['发布账号', '标题', '话题标签', '图片'];
+
+  const setConnectionState = (connected, message = '', availableFields = null) => {
+    feishuView.dataset.connected = connected ? 'true' : 'false';
+    connectionStatus.textContent = connected ? '已连接' : '未连接';
+    connectionStatus.className = connected ? 'status ok' : 'status';
+    collectionConnectionBadge.innerHTML = connected ? '<i data-lucide="check-circle-2" aria-hidden="true"></i> 飞书已连接' : '<i data-lucide="circle-alert" aria-hidden="true"></i> 飞书未连接';
+    validationMessage.innerHTML = message;
+    feishuView.querySelectorAll('[data-field-status]').forEach((status, index) => {
+      const matched = availableFields && availableFields.has(requiredFields[index]);
+      status.textContent = availableFields ? (matched ? '已匹配' : '未找到') : '待校验';
+      status.className = matched ? 'ok' : '';
+      if (availableFields && !matched) status.style.color = '#d73d48'; else status.style.color = '';
+    });
+    if (globalThis.lucide) lucide.createIcons({attrs:{width:16,height:16}});
+  };
+  const markChanged = () => setConnectionState(false, '<span class="muted">连接信息已修改，请重新保存并校验。</span>');
+  toggleAuthCode.addEventListener('click', () => {
+    const showing = authCodeInput.type === 'text';
+    authCodeInput.type = showing ? 'password' : 'text';
+    toggleAuthCode.textContent = showing ? '显示' : '隐藏';
+  });
+  authCodeInput.addEventListener('input', markChanged);
+  tableUrlInput.addEventListener('input', markChanged);
+  const checkFeishuConnection = async () => {
+    const authCode = authCodeInput.value.trim();
+    const tableUrl = tableUrlInput.value.trim();
+    if (!authCode) { setConnectionState(false, '<span style="color:#d73d48">请输入授权码。</span>'); authCodeInput.focus(); return; }
+    let parsedUrl;
+    try { parsedUrl = new URL(tableUrl); } catch { setConnectionState(false, '<span style="color:#d73d48">请输入正确的飞书多维表格链接。</span>'); tableUrlInput.focus(); return; }
+    const validHost = parsedUrl.hostname.endsWith('.feishu.cn') || parsedUrl.hostname === 'feishu.cn' || parsedUrl.hostname.endsWith('.larksuite.com');
+    if (!validHost || !parsedUrl.pathname.includes('/base/')) { setConnectionState(false, '<span style="color:#d73d48">链接必须是飞书多维表格的 base 地址。</span>'); tableUrlInput.focus(); return; }
+    const appToken = parsedUrl.pathname.match(/\/base\/([^/?#]+)/)?.[1];
+    const tableId = parsedUrl.searchParams.get('table');
+    if (!appToken || !tableId) { setConnectionState(false, '<span style="color:#d73d48">链接中缺少多维表格 app_token 或 table 参数，请复制打开具体数据表后的完整地址。</span>'); return; }
+    connectionStatus.textContent = '校验中…';
+    connectionStatus.className = 'status';
+    validationMessage.innerHTML = '<span class="muted">正在请求飞书并读取字段，请稍候…</span>';
+    validateFeishu.disabled = true;
+    refreshFeishu.disabled = true;
+    try {
+      const runningLocally = location.protocol === 'http:' || location.protocol === 'https:';
+      const endpoint = runningLocally
+        ? '/api/feishu/validate'
+        : `https://base-api.feishu.cn/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/fields?page_size=100`;
+      const response = await fetch(endpoint, runningLocally
+        ? {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({authCode,appToken,tableId})}
+        : {headers:{Authorization:`Bearer ${authCode}`}});
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.code !== 0) throw new Error(result.msg || `HTTP ${response.status}`);
+      const fieldItems = result.data?.items || [];
+      feishuView._fieldItems = fieldItems;
+      const availableFields = new Set(fieldItems.map(field => field.field_name));
+      const matchedFields = new Set(requiredFields.filter(field => field === '图片'
+        ? fieldItems.some(item => item.field_name === field && Number(item.type) === 17)
+        : availableFields.has(field)));
+      document.dispatchEvent(new CustomEvent('feishu-fields-updated', {detail:{items:fieldItems}}));
+      const missingFields = requiredFields.filter(field => !matchedFields.has(field));
+      const message = missingFields.length
+        ? `<span style="color:#b7791f">飞书连接成功，但缺少字段：${missingFields.join('、')}。</span>`
+        : '<span class="ok">连接成功，已从飞书读取并匹配全部写入字段。</span>';
+      setConnectionState(true, message, matchedFields);
+      if (globalThis.desktopConfig?.saveConnection) {
+        try {
+          await globalThis.desktopConfig.saveConnection({authCode, tableUrl});
+          validationMessage.insertAdjacentHTML('beforeend', '<div class="ok" style="margin-top:6px">连接信息已安全保存，下次启动将自动恢复。</div>');
+        } catch (saveError) {
+          validationMessage.insertAdjacentHTML('beforeend', `<div style="color:#d73d48;margin-top:6px">连接成功，但保存失败：${safe(saveError.message)}。</div>`);
+        }
+      }
+    } catch (error) {
+      const reason = error instanceof TypeError ? '网络请求被阻止或无法访问飞书 Base API' : error.message;
+      setConnectionState(false, `<span style="color:#d73d48">连接失败：${safe(reason)}。请检查授权码、表格权限和网络后刷新重试。</span>`);
+    } finally {
+      validateFeishu.disabled = false;
+      refreshFeishu.disabled = false;
+    }
+  };
+  validateFeishu.addEventListener('click', checkFeishuConnection);
+  refreshFeishu.addEventListener('click', checkFeishuConnection);
+  setConnectionState(false);
+  const restoreSavedConnection = async () => {
+    if (!globalThis.desktopConfig?.loadConnection) return;
+    try {
+      const saved = await globalThis.desktopConfig.loadConnection();
+      if (!saved?.authCode || !saved?.tableUrl) return;
+      authCodeInput.value = saved.authCode;
+      tableUrlInput.value = saved.tableUrl;
+      validationMessage.innerHTML = '<span class="muted">已恢复保存的连接信息，正在自动校验…</span>';
+      await checkFeishuConnection();
+    } catch (error) {
+      setConnectionState(false, `<span style="color:#d73d48">读取已保存连接失败：${safe(error.message)}。</span>`);
+    }
+  };
+  restoreSavedConnection();
+
+  const setActive = index => navItems.forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === index));
+  navItems[0].addEventListener('click', () => { feishuView.hidden = true; setActive(0); });
+  navItems[1].addEventListener('click', () => { feishuView.hidden = true; setActive(1); });
+  navItems[2].addEventListener('click', () => { feishuView.hidden = true; setActive(2); });
+  navItems[3].addEventListener('click', () => {
+    collectionViews.forEach(view => { view.hidden = true; });
+    groupView.hidden = true;
+    feishuView.hidden = false;
+    setActive(3);
+  });
+
+  const originalUploadButton = app.querySelector('#upload');
+  const uploadButton = originalUploadButton.cloneNode(true);
+  originalUploadButton.replaceWith(uploadButton);
+  const collectionStatus = app.querySelector('#status');
+  uploadButton.addEventListener('click', async () => {
+    if (feishuView.dataset.connected !== 'true') {
+      collectionStatus.innerHTML = '<span style="color:#d73d48">上传失败：请先到“飞书连接”完成真实连接校验。</span>';
+      return;
+    }
+    const rows = [...app.querySelectorAll('#results tr')].filter(row => row.cells[5] && row.cells[5].textContent.trim() !== '等待采集');
+    if (!rows.length) {
+      collectionStatus.innerHTML = '<span style="color:#d73d48">上传失败：当前没有已完成采集的记录。</span>';
+      return;
+    }
+    const parsedUrl = new URL(tableUrlInput.value.trim());
+    const appToken = parsedUrl.pathname.match(/\/base\/([^/?#]+)/)?.[1];
+    const tableId = parsedUrl.searchParams.get('table');
+    const records = rows.map(row => ({
+      '发布账号': row.cells[3].textContent.trim(),
+      '商品ID': row.cells[4].textContent.trim(),
+      '标题': row.cells[5].textContent.trim(),
+      '话题标签': row.cells[6].textContent.trim() === '—' ? '' : row.cells[6].textContent.trim(),
+    }));
+    uploadButton.disabled = true;
+    collectionStatus.innerHTML = `<span class="muted">正在向飞书写入 ${records.length} 条记录…</span>`;
+    try {
+      const response = await fetch('/api/feishu/upload', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({authCode:authCodeInput.value.trim(),appToken,tableId,records})});
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.code !== 0) throw new Error(result.msg || `HTTP ${response.status}`);
+      const written = result.data?.records?.length ?? records.length;
+      const skippedFields = result.data?.skipped_fields || [];
+      const skippedMessage = skippedFields.length ? `；已跳过不存在字段：${skippedFields.join('、')}` : '';
+      collectionStatus.innerHTML = `<span class="ok">上传完成：飞书确认新增 ${written} 条记录${skippedMessage}。</span>`;
+    } catch (error) {
+      collectionStatus.innerHTML = `<span style="color:#d73d48">上传失败：${safe(error.message)}。</span>`;
+    } finally {
+      uploadButton.disabled = false;
+    }
+  });
+})();
+</script>
+<script>
+(() => {
+  const app = document.getElementById('xhs-app');
+  const results = app.querySelector('#results');
+  const tagHeader = [...app.querySelectorAll('th')].find(th => th.textContent.trim() === '话题标签');
+  if (tagHeader) tagHeader.firstChild.textContent = '话题标签（最多 10 个）';
+
+  // 采集到的全部标签先标准化，再只保留前 10 个用于展示与上传。
+  const normalizeTags = rawTags => String(rawTags || '')
+    .split(/[,，\s]+/)
+    .map(tag => tag.replace(/^#+/, '').trim())
+    .filter(Boolean)
+    .slice(0, 10)
+    .join(',');
+
+  const limitTags = () => results.querySelectorAll('tr').forEach(row => {
+    if (row.cells[6]) row.cells[6].textContent = normalizeTags(row.cells[6].textContent);
+  });
+  app.querySelector('#parse').addEventListener('click', limitTags);
+  limitTags();
+})();
+</script>
+<script>
+(() => {
+  const app = document.getElementById('xhs-app');
+  const groupSelect = app.querySelector('#selected-group');
+  const results = app.querySelector('#results');
+  const groupLabel = groupSelect.closest('label');
+  const productLabel = document.createElement('label');
+  productLabel.textContent = '商品 ID ';
+  const productInput = document.createElement('input');
+  productInput.id = 'product-id';
+  productInput.type = 'text';
+  productInput.value = '商品ID-001';
+  productInput.setAttribute('aria-label', '商品 ID');
+  productInput.style.cssText = 'width:130px;background:light-dark(#fff,#181b21);color:inherit;border:1px solid light-dark(#d8dde6,#444a57);border-radius:7px;padding:7px 8px;font:inherit';
+  productLabel.append(productInput);
+  groupLabel.before(productLabel);
+
+  const syncProductId = () => results.querySelectorAll('tr').forEach(row => {
+    if (row.cells[4]) row.cells[4].textContent = productInput.value.trim() || '—';
+  });
+  productInput.addEventListener('input', syncProductId);
+  app.querySelector('#parse').addEventListener('click', syncProductId);
+  syncProductId();
+})();
+</script>
+<script>
+(() => {
+  const app = document.getElementById('xhs-app');
+  const groupView = app.querySelector('#group-settings-view');
+  const groupSelect = app.querySelector('#selected-group');
+  const overlay = document.createElement('div');
+  overlay.hidden = true;
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:10;background:rgba(16,24,40,.35);display:none;place-items:center;padding:20px';
+  overlay.innerHTML = `<form style="width:min(420px,100%);background:light-dark(#fff,#20232b);color:inherit;border-radius:12px;padding:20px;box-shadow:0 18px 50px rgba(0,0,0,.22)"><h3 id="account-form-title" style="font-size:18px">新增发布账号</h3><label id="account-form-label">发布账号名称<br><input id="account-form-input" required autocomplete="off" style="box-sizing:border-box;width:100%;margin-top:7px;background:light-dark(#fff,#181b21);color:inherit;border:1px solid light-dark(#d8dde6,#444a57);border-radius:7px;padding:9px;font:inherit"></label><div class="row" style="justify-content:flex-end;margin-top:18px"><button class="secondary" id="cancel-account-form" type="button">取消</button><button class="primary" type="submit">保存</button></div></form>`;
+  groupView.append(overlay);
+  const form = overlay.querySelector('form');
+  const title = overlay.querySelector('#account-form-title');
+  const label = overlay.querySelector('#account-form-label');
+  const field = overlay.querySelector('#account-form-input');
+  const groupSaveStatus = groupView.querySelector('#group-save-status');
+  let action = null;
+
+  const accountActions = () => `<span style="display:flex;gap:8px;align-items:center"><button class="secondary" type="button" data-action="edit-account">编辑</button><button class="secondary" type="button" data-action="delete-account" style="color:#d73d48">删除</button></span>`;
+  const accountRow = name => {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${safe(name)}</td><td>${accountActions()}</td>`;
+    return row;
+  };
+  const groupSection = name => {
+    const section = document.createElement('section');
+    section.className = 'section';
+    section.innerHTML = `<div class="row"><h3 style="margin:0">${safe(name)}</h3><button class="secondary" type="button" data-action="add-account">+ 添加发布账号</button></div><div class="scroll" style="margin-top:12px"><table><thead><tr><th>发布账号</th><th>操作</th></tr></thead><tbody></tbody></table></div>`;
+    return section;
+  };
+  const readGroups = () => [...groupView.querySelectorAll('.section')].map(section => ({
+    name: section.querySelector('h3').textContent.trim(),
+    accounts: [...section.querySelectorAll('tbody tr')].map(row => row.cells[0].textContent.trim()).filter(Boolean),
+  })).filter(group => group.name);
+  const persistGroups = async groups => {
+    groupSaveStatus.textContent = '保存中…';
+    groupSaveStatus.className = 'status muted';
+    try {
+      if (globalThis.desktopConfig?.saveGroups) {
+        await globalThis.desktopConfig.saveGroups({groups});
+      } else {
+        localStorage.setItem('xiaohongshu-group-config', JSON.stringify({groups}));
+      }
+      groupSaveStatus.textContent = '已保存，下次启动自动恢复';
+      groupSaveStatus.className = 'status ok';
+      groupSaveStatus.style.color = '';
+    } catch (error) {
+      groupSaveStatus.textContent = `保存失败：${error.message}`;
+      groupSaveStatus.className = 'status';
+      groupSaveStatus.style.color = '#d73d48';
+    }
+  };
+  const syncConfiguration = ({persist = true} = {}) => {
+    const groups = readGroups();
+    const names = groups.map(group => group.name);
+    groups.forEach(({name, accounts}) => {
+      rules[name] = accounts.map(account => [account, '']);
+    });
+    Object.keys(rules).filter(name => !names.includes(name)).forEach(name => delete rules[name]);
+    const selected = groupSelect.value;
+    groupSelect.innerHTML = names.map(name => `<option>${safe(name)}</option>`).join('');
+    if (names.includes(selected)) groupSelect.value = selected;
+    if (persist) void persistGroups(groups);
+  };
+  const openForm = (mode, context, value = '') => {
+    action = { mode, context };
+    title.textContent = mode === 'add-group' ? '新增分组' : mode === 'add-account' ? '新增发布账号' : '编辑发布账号';
+    label.firstChild.textContent = mode === 'add-group' ? '分组名称' : '发布账号名称';
+    field.value = value;
+    overlay.hidden = false;
+    overlay.style.display = 'grid';
+    field.focus();
+  };
+  const closeForm = () => {
+    overlay.hidden = true;
+    overlay.style.display = 'none';
+    field.value = '';
+    field.setCustomValidity('');
+    action = null;
+  };
+  overlay.querySelector('#cancel-account-form').addEventListener('click', closeForm);
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const value = field.value.trim();
+    if (!value) return;
+    if (action.mode === 'add-group') {
+      if ([...groupView.querySelectorAll('.section h3')].some(h3 => h3.textContent.trim() === value)) { field.setCustomValidity('分组名称已存在'); field.reportValidity(); return; }
+      groupView.append(groupSection(value));
+    } else if (action.mode === 'add-account') {
+      action.context.querySelector('tbody').append(accountRow(value));
+    } else {
+      action.context.cells[0].textContent = value;
+    }
+    field.setCustomValidity('');
+    closeForm();
+    syncConfiguration();
+  });
+  groupView.addEventListener('click', event => {
+    const button = event.target.closest('button');
+    if (!button) return;
+    if (button.id === 'add-group') openForm('add-group');
+    if (button.dataset.action === 'add-account') openForm('add-account', button.closest('.section'));
+    if (button.dataset.action === 'edit-account') openForm('edit-account', button.closest('tr'), button.closest('tr').cells[0].textContent.trim());
+    if (button.dataset.action === 'delete-account') {
+      const row = button.closest('tr');
+      const accountName = row.cells[0].textContent.trim();
+      if (window.confirm(`确定删除发布账号“${accountName}”吗？`)) {
+        row.remove();
+        syncConfiguration();
+      }
+    }
+  });
+  groupView.querySelectorAll('tbody tr').forEach(row => {
+    row.cells[1].innerHTML = accountActions();
+  });
+  groupView.querySelectorAll('button').forEach(button => {
+    if (button.textContent.includes('添加发布账号')) button.dataset.action = 'add-account';
+  });
+  app.querySelectorAll('.nav').forEach(item => item.addEventListener('click', closeForm));
+  closeForm();
+  const restoreGroups = async () => {
+    try {
+      let saved;
+      if (globalThis.desktopConfig?.loadGroups) {
+        saved = await globalThis.desktopConfig.loadGroups();
+      } else {
+        saved = JSON.parse(localStorage.getItem('xiaohongshu-group-config') || '{"groups":[]}');
+      }
+      const savedGroups = Array.isArray(saved?.groups) ? saved.groups.filter(group => group?.name) : [];
+      if (savedGroups.length) {
+        groupView.querySelectorAll('.section').forEach(section => section.remove());
+        savedGroups.forEach(savedGroup => {
+          const section = groupSection(String(savedGroup.name));
+          (Array.isArray(savedGroup.accounts) ? savedGroup.accounts : []).forEach(account => {
+            if (String(account).trim()) section.querySelector('tbody').append(accountRow(String(account).trim()));
+          });
+          groupView.insertBefore(section, overlay);
+        });
+        groupSaveStatus.textContent = '已恢复上次保存的配置';
+        groupSaveStatus.className = 'status ok';
+        groupSaveStatus.style.color = '';
+      } else {
+        groupSaveStatus.textContent = '当前为默认配置，编辑后自动保存';
+        groupSaveStatus.className = 'status muted';
+        groupSaveStatus.style.color = '';
+      }
+      syncConfiguration({persist:false});
+    } catch (error) {
+      groupSaveStatus.textContent = `读取配置失败：${error.message}`;
+      groupSaveStatus.className = 'status';
+      groupSaveStatus.style.color = '#d73d48';
+      syncConfiguration({persist:false});
+    }
+  };
+  restoreGroups();
+})();
+</script>
