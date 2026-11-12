@@ -1,0 +1,43 @@
+{
+  "name": "xiaohongshu-feishu-uploader",
+  "version": "1.1.4",
+  "description": "小红书笔记采集并上传到飞书多维表格的本地桌面工具",
+  "main": "electron-main.js",
+  "author": "Local Desktop Tool",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "44.4.1",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.local.xiaohongshu.feishu.uploader",
+    "productName": "小红书采集飞书上传",
+    "asar": true,
+    "files": [
+      "electron-main.js",
+      "preload.js",
+      "server.js",
+      "xiaohongshu-feishu-desktop-mockup.html",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.svg",
+      "artifactName": "小红书采集飞书上传-${version}-便携版.${ext}"
+    }
+  }
+}
